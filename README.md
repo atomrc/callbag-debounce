@@ -12,7 +12,7 @@ Debounces the `scroll` event and runs the `expensiveFunction` only when there is
 
 ```javascript
 const { fromEvent, forEach, pipe } = require("callbag-basics");
-const debounce = require("callbag-debounce");
+import { debounce } from "callbag-debounce";
 
 pipe(
   fromEvent(document, "scroll"),
