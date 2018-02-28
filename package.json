@@ -1,6 +1,6 @@
 {
   "name": "callbag-debounce",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "debounce operator for callbag",
   "repository": {
     "type": "git",
