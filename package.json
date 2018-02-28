@@ -9,7 +9,7 @@
   "main": "dist/debounce.js",
   "types": "dist/debounce.d.ts",
   "scripts": {
-    "test": "tape test.js",
+    "test": "tape -r ts-node/register test.ts",
     "prepare": "tsc"
   },
   "author": "Thomas Belin",
@@ -19,11 +19,11 @@
   "devDependencies": {
     "callbag-mock": "^1.0.0",
     "tape": "^4.8.0",
-    "typescript": "^2.7.2"
-  },
-  "dependencies": {
+    "ts-node": "^5.0.0",
+    "typescript": "^2.7.2",
     "callbag-for-each": "^1.0.1",
     "callbag-from-iter": "^1.0.0",
     "callbag-pipe": "^1.1.1"
-  }
+  },
+  "dependencies": {}
 }

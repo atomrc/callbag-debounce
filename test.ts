@@ -4,7 +4,7 @@ const pipe = require("callbag-pipe");
 const forEach = require("callbag-for-each");
 const mock = require("callbag-mock");
 
-const debounce = require("./index");
+import { debounce } from "./src/debounce";
 
 test("it should debounces a listenable source", t => {
   const timeoutValues = [0, 1, 2, 6, 16];
