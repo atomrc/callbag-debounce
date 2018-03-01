@@ -9,12 +9,13 @@ export function debounce(wait: number): any {
     if (start !== 0) return;
     let timeout: number;
     source(0, (t: number, d: any) => {
-      if (t === 1) {
+      if (t === 1 || (t === 2 && d === undefined)) {
         // t === 1 means the source is emitting a value
+        // t === 2 and d === undefined means the source emits a completion
         if (timeout) {
           clearTimeout(timeout);
         }
-        timeout = setTimeout(() => sink(1, d), wait);
+        timeout = setTimeout(() => sink(t, d), wait);
       }
       /*
        * no need to handle the t === 0 case because
