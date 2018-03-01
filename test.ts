@@ -52,3 +52,30 @@ test("it should send error right away", t => {
   source.emit(2, "error");
 
 });
+
+test("it should delay completion", t => {
+  t.plan(1);
+
+  const source = mock("sources", function () {}, true);
+
+  const timeStart = new Date().getTime();
+  const debounceValue = 50;
+  pipe(
+    source,
+    debounce(debounceValue),
+    s => (start, sink) => {
+      if (start !== 0) return;
+      s(0, (st, d) => {
+        if (st === 2) {
+          const exeTime = new Date().getTime() - timeStart;
+          return t.ok(exeTime >= debounceValue);
+        }
+        sink(st, d);
+      })
+    },
+    forEach(console.log.bind(console))
+  );
+
+  source.emit(2);
+
+});
