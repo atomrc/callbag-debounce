@@ -24,3 +24,31 @@ test("it should debounces a listenable source", t => {
   });
 
 });
+
+test("it should send error right away", t => {
+  t.plan(2);
+
+  const source = mock("sources", function () {}, true);
+
+  const timeStart = new Date().getTime();
+  const debounceValue = 10000;
+  pipe(
+    source,
+    debounce(debounceValue),
+    s => (start, sink) => {
+      if (start !== 0) return;
+      s(0, (st, d) => {
+        if (st === 2) {
+          const exeTime = new Date().getTime() - timeStart;
+          t.ok(exeTime < debounceValue);
+          return t.equals(d, "error");
+        }
+        sink(st, d);
+      })
+    },
+    forEach(console.log.bind(console))
+  );
+
+  source.emit(2, "error");
+
+});
