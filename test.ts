@@ -46,14 +46,47 @@ test("it should send error right away", t => {
         sink(st, d);
       })
     },
-    forEach(console.log.bind(console))
+    forEach(() => {})
   );
 
   source.emit(2, "error");
 
 });
 
-test("it should delay completion", t => {
+test("it should send completion right away if no value debounced", t => {
+  t.plan(1);
+
+  const source = mock("sources", function () {}, true);
+
+  let timeStart: number;
+  const debounceValue = 10;
+  pipe(
+    source,
+    debounce(debounceValue),
+    s => (start, sink) => {
+      if (start !== 0) return;
+      s(0, (st, d) => {
+        if (st === 2) {
+          const exeTime = new Date().getTime() - timeStart;
+          return t.ok(exeTime < debounceValue);
+        }
+        sink(st, d);
+      })
+    },
+    forEach(() => {})
+  );
+
+  // emit a value
+  source.emit(1, "data");
+  // emit the completion once the value has been debounced
+  setTimeout(() => {
+    timeStart = new Date().getTime()
+    source.emit(2);
+  }, debounceValue + 1)
+
+});
+
+test("it should send completion after the last emission", t => {
   t.plan(1);
 
   const source = mock("sources", function () {}, true);
@@ -73,9 +106,10 @@ test("it should delay completion", t => {
         sink(st, d);
       })
     },
-    forEach(console.log.bind(console))
+    forEach(() => {})
   );
 
+  source.emit(1, "event");
   source.emit(2);
 
 });
