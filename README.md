@@ -20,3 +20,25 @@ pipe(
   forEach(expensiveFunction)
 );
 ```
+
+## Changelog
+
+### v2.1.0 (05/03/2018)
+
+- `error` (`t === 2 && d !== undefined`) signals are sent right away (previously they were delayed according to the `wait` parameter);
+- `complete` (`t === 2 && d === undefined`) signals are sent when the last value is debounced (previously they were debounced according to the `wait` parameter).
+
+### v2.0.0 (01/03/2018)
+
+codebase migrated to TypeScript.
+The module needs to be imported via a named import
+
+```javascript
+import { debounce } from "callbag-debounce";
+```
+
+previously
+
+```javascript
+import debounce from "callbag-debounce";
+```
