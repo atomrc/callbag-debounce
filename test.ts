@@ -2,6 +2,7 @@ const test = require("tape");
 
 const pipe = require("callbag-pipe");
 const forEach = require("callbag-for-each");
+const fromIter = require("callbag-from-iter");
 const mock = require("callbag-mock");
 
 import { debounce } from "./src/debounce";
@@ -112,4 +113,32 @@ test("it should send completion after the last emission", t => {
   source.emit(1, "event");
   source.emit(2);
 
+});
+
+
+test("it should with pullable source", t => {
+  t.plan(2);
+  const actual = []
+
+  const timeStart = Date.now();
+  const debounceValue = 1000;
+
+  pipe(
+    fromIter([1, 2, 3]),
+    debounce(debounceValue),
+    s => (start, sink) => {
+      if (start !== 0) return;
+      s(0, (st, d) => {
+        if (st === 2) {
+          const exeTime = Date.now() - timeStart;
+          t.ok(exeTime >= debounceValue);
+          t.equals(actual.length, 0);
+        }
+        sink(st, d);
+      });
+    },
+    forEach((value) => {
+      actual.push(value);
+    }),
+  );
 });
