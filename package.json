@@ -7,10 +7,14 @@
     "url": "git+https://github.com/atomrc/callbag-debounce.git"
   },
   "main": "dist/debounce.js",
+  "module": "es/debounce.js",
   "types": "dist/debounce.d.ts",
+  "files": ["dist", "es"],
   "scripts": {
     "test": "tape -r ts-node/register test.ts",
-    "prepare": "tsc"
+    "build:cjs": "tsc --outDir dist/",
+    "build:es": "tsc --outDir es/ --module es2015",
+    "prepare": "npm run build:cjs && npm run build:es"
   },
   "author": "Thomas Belin",
   "keywords": [
