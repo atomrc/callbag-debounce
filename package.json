@@ -1,6 +1,6 @@
 {
   "name": "callbag-debounce",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "debounce operator for callbag",
   "repository": {
     "type": "git",
@@ -9,7 +9,10 @@
   "main": "dist/debounce.js",
   "module": "es/debounce.js",
   "types": "dist/debounce.d.ts",
-  "files": ["dist", "es"],
+  "files": [
+    "dist",
+    "es"
+  ],
   "scripts": {
     "test": "tape -r ts-node/register test.ts",
     "build:cjs": "tsc --outDir dist/",
