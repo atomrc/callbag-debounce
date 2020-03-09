@@ -1,13 +1,13 @@
 {
-  "files": [
-    "./src/debounce.ts"
-  ],
+  "files": ["src/debounce.ts"],
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
     "declaration": true,
     "strict": true,
+    "moduleResolution": "node",
     "noImplicitAny": true,
+    "skipLibCheck": true,
     "strictNullChecks": true,
     "strictFunctionTypes": true,
     "strictPropertyInitialization": true,
