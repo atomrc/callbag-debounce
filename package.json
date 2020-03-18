@@ -24,13 +24,15 @@
     "callbag"
   ],
   "devDependencies": {
-    "callbag-mock": "^1.0.0",
-    "tape": "^4.8.0",
-    "ts-node": "^5.0.0",
-    "typescript": "^2.7.2",
     "callbag-for-each": "^1.0.1",
     "callbag-from-iter": "^1.0.0",
-    "callbag-pipe": "^1.1.1"
+    "callbag-mock": "^1.0.0",
+    "callbag-pipe": "^1.1.1",
+    "tape": "^4.8.0",
+    "ts-node": "^5.0.0",
+    "typescript": "^3.8.3"
   },
-  "dependencies": {}
+  "dependencies": {
+    "callbag": "^1.2.0"
+  }
 }

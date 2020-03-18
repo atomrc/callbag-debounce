@@ -1,11 +1,13 @@
+import {Source} from 'callbag';
+
 /**
  * Debounces the given listenable source
  *
  * @param {number} wait - The number of ms to wait before letting a value pass
  * @returns {Function}
  */
-export function debounce(wait: number): any {
-  return (source: any) => (start: number, sink: any) => {
+export function debounce<I>(wait: number): (source: Source<I>) => Source<I> {
+  return (source) => (start: number, sink: any) => {
     if (start !== 0) return;
     let timeout: number | undefined;
     source(0, (t: number, d: any) => {
