@@ -11,7 +11,19 @@ export function debounce<I>(wait: number): (source: Source<I>) => Source<I> {
     if (start !== 0) return;
     let timeout: number | undefined;
     source(0, (t: number, d: any) => {
-      if (t === 1 || (t === 2 && d === undefined)) {
+      if (t === 0) {
+        // handle talkback from sink
+        sink(t, (t2: number, val: any) => {
+          // cleanup when terminated by sink
+          if (t2 === 2 && timeout !== undefined) {
+            clearTimeout(timeout);
+            timeout = undefined;
+          }
+  
+          // pass all talkback to source
+          d(t2, val);
+        });
+      } else if (t === 1 || (t === 2 && d === undefined)) {
         // t === 1 means the source is emitting a value
         // t === 2 and d === undefined means the source emits a completion
         if (!timeout && t === 2) {
@@ -26,9 +38,6 @@ export function debounce<I>(wait: number): (source: Source<I>) => Source<I> {
         }, wait);
       }
       /*
-       * no need to handle the t === 0 case because
-       * the operator never needs to talkback to the source
-       *
        * nothing specific to do when the source
        * sends a t === 2 d !== undefined signal
        */
