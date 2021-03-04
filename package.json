@@ -28,6 +28,7 @@
     "callbag-from-iter": "^1.0.0",
     "callbag-mock": "^1.0.0",
     "callbag-pipe": "^1.1.1",
+    "callbag-subscribe": "^1.5.1",
     "tape": "^4.8.0",
     "ts-node": "^5.0.0",
     "typescript": "^3.8.3"

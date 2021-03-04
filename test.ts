@@ -3,6 +3,7 @@ const test = require("tape");
 const pipe = require("callbag-pipe");
 const forEach = require("callbag-for-each");
 const mock = require("callbag-mock");
+const subscribe = require("callbag-subscribe");
 
 import { debounce } from "./src/debounce";
 
@@ -112,4 +113,25 @@ test("it should send completion after the last emission", t => {
   source.emit(1, "event");
   source.emit(2);
 
+});
+
+test("it should not emit after unsubscribe", t => {
+  t.plan(1);
+
+  const source = mock("source", () => {}, true);
+  let res = false;
+  const unsubscribe = pipe(
+    source,
+    debounce(2),
+    subscribe(v => {
+      res = v;
+    })
+  );
+
+  source.emit(1, true);
+  unsubscribe();
+
+  setTimeout(() => {
+    t.equal(res, false);
+  }, 5);
 });
