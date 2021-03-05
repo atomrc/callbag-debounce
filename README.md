@@ -23,6 +23,12 @@ pipe(
 
 ## Changelog
 
+### 3.0.0 (05/03/2021)
+
+BREAKING CHANGE:
+
+- Timer is cleared when stream is terminated by sink (see #13)
+
 ### v2.1.0 (05/03/2018)
 
 - `error` (`t === 2 && d !== undefined`) signals are sent right away (previously they were delayed according to the `wait` parameter);
