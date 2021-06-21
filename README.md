@@ -23,6 +23,35 @@ pipe(
 
 ## Changelog
 
+### 4.0.0 (21/06/2021)
+
+BREAKING CHANGE:
+
+- Last value is flushed even if the stream is receiving a terminate signal before the value has been debounced (fixes #12)
+
+Before
+
+```js
+pipe(
+  of(42),
+  debounce(1000),
+  subscribe(console.log)
+)
+// Terminate without logging anything
+```
+
+After
+
+```js
+pipe(
+  of(42),
+  debounce(1000),
+  subscribe(console.log)
+)
+// log: 42
+// Then terminate
+```
+
 ### 3.0.0 (05/03/2021)
 
 BREAKING CHANGE:
