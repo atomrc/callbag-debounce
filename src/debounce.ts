@@ -9,7 +9,7 @@ import {Source} from 'callbag';
 export function debounce<I>(wait: number): (source: Source<I>) => Source<I> {
   return (source) => (start: number, sink: any) => {
     if (start !== 0) return;
-    let timeout: number | undefined;
+    let timeout: NodeJS.Timeout | undefined;
     source(0, (t: number, d: any) => {
       if (t === 0) {
         // handle talkback from sink
