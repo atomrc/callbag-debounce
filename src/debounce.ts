@@ -1,4 +1,4 @@
-import {Source} from 'callbag';
+import { Source } from "callbag";
 
 /**
  * Debounces the given listenable source
@@ -19,7 +19,7 @@ export function debounce<I>(wait: number): (source: Source<I>) => Source<I> {
             clearTimeout(timeout);
             timeout = undefined;
           }
-  
+
           // pass all talkback to source
           d(t2, val);
         });
@@ -36,12 +36,13 @@ export function debounce<I>(wait: number): (source: Source<I>) => Source<I> {
           sink(t, d);
           timeout = undefined;
         }, wait);
+      } else {
+        /*
+         * nothing specific to do when the source
+         * sends a t === 2 d !== undefined signal
+         */
+        sink(t, d);
       }
-      /*
-       * nothing specific to do when the source
-       * sends a t === 2 d !== undefined signal
-       */
-      else sink(t, d);
     });
   };
 }
