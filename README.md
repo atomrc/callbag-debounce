@@ -27,7 +27,7 @@ pipe(
 
 BREAKING CHANGE:
 
-- Last value is flushed even if the stream is receiving a terminate signal before the value has been debounced (fixes #12)
+- Last value is flushed even if the stream is receiving a terminate signal before the value has been debounced (fixes [#12](https://github.com/atomrc/callbag-debounce/pull/12))
 
 Before
 
@@ -37,7 +37,7 @@ pipe(
   debounce(1000),
   subscribe(console.log)
 )
-// Terminate without logging anything
+// Terminates without logging anything
 ```
 
 After
@@ -48,15 +48,15 @@ pipe(
   debounce(1000),
   subscribe(console.log)
 )
-// log: 42
-// Then terminate
+// logs 42
+// Then terminates
 ```
 
 ### 3.0.0 (05/03/2021)
 
 BREAKING CHANGE:
 
-- Timer is cleared when stream is terminated by sink (see #13)
+- Timer is cleared when stream is terminated by sink (see [#13](https://github.com/atomrc/callbag-debounce/pull/13))
 
 ### v2.1.0 (05/03/2018)
 

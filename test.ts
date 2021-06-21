@@ -100,7 +100,7 @@ test("it should not emit after unsubscribe", (t) => {
   }, 5);
 });
 
-test("it should flush last value when receiving a terminaison signal", (t) => {
+test("it should flush last value when receiving a termination signal", (t) => {
   t.plan(1);
 
   const source = mock(true);
