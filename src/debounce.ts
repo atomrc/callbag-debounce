@@ -10,6 +10,7 @@ export function debounce<I>(wait: number): (source: Source<I>) => Source<I> {
   return (source) => (start: number, sink: any) => {
     if (start !== 0) return;
     let timeout: NodeJS.Timeout | undefined;
+    let shouldTerminate = false;
     source(0, (t: number, d: any) => {
       if (t === 0) {
         // handle talkback from sink
@@ -26,14 +27,24 @@ export function debounce<I>(wait: number): (source: Source<I>) => Source<I> {
       } else if (t === 1 || (t === 2 && d === undefined)) {
         // t === 1 means the source is emitting a value
         // t === 2 and d === undefined means the source emits a completion
-        if (!timeout && t === 2) {
-          return sink(t, d);
+        if (t === 2) {
+          if (!timeout) {
+            // There is not pending value, we can terminate the stream
+            return sink(t, d);
+          } else {
+            // We keep track that the stream should terminate after the next value is emitted
+            shouldTerminate = true;
+            return;
+          }
         }
         if (timeout) {
           clearTimeout(timeout);
         }
         timeout = setTimeout(() => {
           sink(t, d);
+          if (shouldTerminate) {
+            sink(2);
+          }
           timeout = undefined;
         }, wait);
       } else {

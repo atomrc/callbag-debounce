@@ -99,3 +99,25 @@ test("it should not emit after unsubscribe", (t) => {
     t.equal(sink.getReceivedData().length, 0);
   }, 5);
 });
+
+test("it should flush last value when receiving a terminaison signal", (t) => {
+  t.plan(1);
+
+  const source = mock(true);
+  const sink = mock();
+
+  debounce(2)(source)(0, sink);
+
+  source.emit(1, true);
+  source.emit(2);
+
+  setTimeout(() => {
+    t.deepEqual(
+      sink.getMessages().filter(([t]) => t !== 0),
+      [
+        [1, true],
+        [2, undefined],
+      ]
+    );
+  }, 3);
+});
