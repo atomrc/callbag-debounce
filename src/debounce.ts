@@ -1,4 +1,4 @@
-import {Source} from 'callbag';
+import { Source } from "callbag";
 
 /**
  * Debounces the given listenable source
@@ -7,9 +7,9 @@ import {Source} from 'callbag';
  * @returns {Function}
  */
 export function debounce<I>(wait: number): (source: Source<I>) => Source<I> {
-  return (source) => (start: number, sink: any) => {
+  return (source) => (start, sink) => {
     if (start !== 0) return;
-    let timeout: number | undefined;
+    let timeout: NodeJS.Timeout | undefined;
     source(0, (t: number, d: any) => {
       if (t === 0) {
         // handle talkback from sink
@@ -19,7 +19,7 @@ export function debounce<I>(wait: number): (source: Source<I>) => Source<I> {
             clearTimeout(timeout);
             timeout = undefined;
           }
-  
+
           // pass all talkback to source
           d(t2, val);
         });
@@ -36,12 +36,11 @@ export function debounce<I>(wait: number): (source: Source<I>) => Source<I> {
           sink(t, d);
           timeout = undefined;
         }, wait);
-      }
+      } else sink(t, d);
       /*
        * nothing specific to do when the source
        * sends a t === 2 d !== undefined signal
        */
-      else sink(t, d);
     });
   };
 }

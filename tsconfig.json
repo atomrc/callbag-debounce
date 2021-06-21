@@ -1,5 +1,6 @@
 {
   "files": ["src/debounce.ts"],
+  "include": ["callbag-mock.d.ts"],
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
