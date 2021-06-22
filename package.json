@@ -14,10 +14,12 @@
     "es"
   ],
   "scripts": {
-    "test": "tape -r ts-node/register test.ts",
+    "test": "tape -r ts-node/register -P tsconfig.ci.json -- test.ts",
+    "typecheck": "tsc -P ./tsconfig.ci.json --noEmit",
+    "build": "npm run build:cjs && npm run build:es",
     "build:cjs": "tsc --outDir dist/",
     "build:es": "tsc --outDir es/ --module es2015",
-    "prepare": "npm run build:cjs && npm run build:es"
+    "prepare": "npm run build"
   },
   "author": "Thomas Belin",
   "keywords": [
@@ -27,7 +29,7 @@
     "@types/tape": "^4.13.0",
     "callbag-mock": "^2.3.0",
     "tape": "^5.2.2",
-    "ts-node": "^5.0.1",
+    "ts-node": "^10.0.0",
     "typescript": "^4.3.4"
   },
   "dependencies": {
