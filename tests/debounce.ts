@@ -1,14 +1,14 @@
-import * as test from "tape";
-const mock = require("callbag-mock");
+import test from "tape";
+import mock from "callbag-mock";
 
-import { debounce } from "./src/debounce";
+import { debounce } from "../src/debounce";
 
 test("it should debounces a listenable source", (t) => {
   const timeoutValues = [0, 1, 2, 6, 16];
   const expected = [2, 6, 16];
   t.plan(1);
 
-  const source = mock(true);
+  const source = mock<number>(true);
   const sink = mock();
 
   debounce(2)(source)(0, sink);
