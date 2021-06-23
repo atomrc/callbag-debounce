@@ -14,7 +14,7 @@
     "es"
   ],
   "scripts": {
-    "test": "tape -r ts-node/register -P tsconfig.ci.json -- test.ts",
+    "test": "TS_NODE_PROJECT=./tsconfig.ci.json tape -r ts-node/register -- tests/*",
     "typecheck": "tsc -P ./tsconfig.ci.json --noEmit",
     "build": "npm run build:cjs && npm run build:es",
     "build:cjs": "tsc --outDir dist/",
