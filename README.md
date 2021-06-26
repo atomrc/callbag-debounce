@@ -2,11 +2,23 @@
 
 Debounce operator for [Callbag](https://github.com/callbag/callbag)
 
+Can for example be used to:
+
+- trigger on pause in keyboard input
+   - Example: show autocomplete suggestions only after you stop typing (a best practice)
+ - detect start or end of scrolling activity
+   - Example: for pausing animations, or run an expensive calculations only when not scrolling
+ - reshape double or multiple click events into a single event.
+   - Example: a Like or Reload button that should not react more than once even if you double click it
+
+In some cases you might want a lossy or lossless throttle callbag instead.
+[Compare debounce and throttle](http://demo.nimius.net/debounce_throttle/)
+
 ## Install
 
     npm i callbag-debounce
 
-## Example
+## Example code
 
 Debounces the `scroll` event and runs the `expensiveFunction` only when there is a 60ms pause.
 
